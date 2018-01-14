@@ -9,6 +9,16 @@ fetch("http://localhost:3333/api/candidates")
         console.log("Request failed")
     });
 
+
+document.addEventListener("click", function (event) {
+    console.log(event.target);
+    if(event.target.hasAttribute("data-id")){
+    var value = event.target.getAttribute("data-id");
+    localStorage.setItem("idkey", value);
+    location.assign = "reports.html";
+    }
+});
+
 function candidatesData(response) {
     for (i = 0; i < response.length; i++) {
 
@@ -30,7 +40,6 @@ function candidatesData(response) {
         candidateImage.setAttribute("style", "width: 12rem");
         candidateImage.setAttribute("style", "height: 12rem");
         candidateCard.appendChild(candidateImage);
-        console.log(candidateImage);
 
         var candidateCardBody = document.createElement("div");
         candidateCardBody.setAttribute("class", "card-body");
@@ -39,11 +48,11 @@ function candidatesData(response) {
         var candidateName = document.createElement("h5");
         var candidateNameText = document.createTextNode(elementName);
         candidateName.appendChild(candidateNameText);
+        candidateName.setAttribute("data-id", elementId);
         candidateName.setAttribute("class", "card-title");
 
         var candidateNameLink = document.createElement("a");
-        candidateNameLink.setAttribute("href", "#");
-        candidateNameLink.setAttribute("data-id", elementId);
+        candidateNameLink.setAttribute("href", "reports.html");
         candidateNameLink.appendChild(candidateName);
         candidateCardBody.appendChild(candidateNameLink);
 
