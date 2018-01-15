@@ -52,23 +52,48 @@ reportsRequest.done(function (response) {
         if (idkey == reportData.candidateId) {
             // proveravamo da li su podaci istog tipa
             var candidatesInfo = reportData;
-            if(!candidatesInfo){
-                var noReport=("There are no available reports for this specific candidate")
-            }
-            candidatesInfoArray.push[candidatesInfo];
+            candidatesInfoArray.push(candidatesInfo);
             console.log(candidatesInfo);
-            console.log(noReport);
+
             // prodji kroz niz i uzmi izvestaj po najnovijem datumu
         }
 
     }
+    if (candidatesInfoArray.length == 0) {
+        var noReport = "<p>There are no available reports for this specific candidate</p>";
+        var table = $(".table-maker");
+        table.after(noReport);
+    };
 
+tableMaker(candidatesInfoArray);
 
 });
 
-function tableMaker() {
+function tableMaker(candidatesInfoArray) {
 
-    
+    for (var i = 0; i < candidatesInfoArray.length; i++) {
+
+        $(".table-maker").append($("<tr>")
+            .append($("<td>")
+                .text(candidatesInfoArray[i].companyName)
+            )
+            .append($("<td>")
+              .text(candidatesInfoArray[i].interviewDate)
+           )
+           .append($("<td>")
+               .text(candidatesInfoArray[i].status)
+        )
+        .append($("<td>")
+        .html("<i data-toggle='modal' data-target='#myModal' class='fa fa-eye' aria-hidden='true'></i>")
+    )
+        );
+       
+
+
+
+
+    }
+
 }
 
 
