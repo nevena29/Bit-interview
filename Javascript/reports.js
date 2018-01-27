@@ -12,7 +12,7 @@ request.done(function (response) {
     console.log(response);
     var CandidateName = response.name;
     var CandidateEmail = response.email;
-    var CandidateBirthday = response.birthday;
+    var CandidateBirthday = new Date(response.birthday).toDateString();
     var CandidateEducation = response.education;
     var Candidateimage;
     if (!response.avatar) {
@@ -43,7 +43,8 @@ request.done(function (response) {
 var reportsRequest = $.ajax({
     url: "http://localhost:3333/api/reports/",
     method: "GET",
-    dataType: "json"
+    dataType: "json",
+
 });
 reportsRequest.done(function (response) {
     var candidatesInfoArray = [];
@@ -65,33 +66,86 @@ reportsRequest.done(function (response) {
         table.after(noReport);
     };
 
-tableMaker(candidatesInfoArray);
+    tableMaker(candidatesInfoArray);
+    renderModalData(response);
 
 });
+// modal
+function renderModalData(response) {
+
+    $(document).on("click", "a", function (event) {
+        var dateForModal = event.target.getAttribute("data-date");
+        var idForModal = event.target.getAttribute("data-id");
+
+
+        var dataForModal = {};
+
+        response.map(function (candidate) {
+
+            var correctDate = new Date(candidate.interviewDate).toLocaleString();
+            console.log(correctDate);
+            console.log(candidate.candidateId);
+
+            if (candidate.candidateId == idForModal && correctDate == dateForModal) {
+
+                dataForModal = candidate;
+                console.log(dataForModal);
+
+            }
+
+
+        }),
+
+
+        $(".modal-title").text(dataForModal.candidateName);
+        $("#company").text(dataForModal.companyName);
+        $("#interviewDate").text(dataForModal.interviewDate);
+        $("#phase").text(dataForModal.phase);
+        $("#status").text(dataForModal.status);
+        $("#note").text(dataForModal.note);
+
+    });
+}
+
+
+
 
 function tableMaker(candidatesInfoArray) {
 
     for (var i = 0; i < candidatesInfoArray.length; i++) {
 
+        var interviewDate = new Date(candidatesInfoArray[i].interviewDate).toLocaleString();
         $(".table-maker").append($("<tr>")
             .append($("<td>")
                 .text(candidatesInfoArray[i].companyName)
             )
             .append($("<td>")
-              .text(candidatesInfoArray[i].interviewDate)
-           )
-           .append($("<td>")
-               .text(candidatesInfoArray[i].status)
-        )
-        .append($("<td>")
-        .html("<i data-toggle='modal' data-target='#myModal' class='fa fa-eye' aria-hidden='true'></i>")
-    )
+                .text(interviewDate)
+            )
+            .append($("<td>")
+                .text(candidatesInfoArray[i].status)
+            )
+            .append($("<td>")
+                .append($("<a>")
+                    .attr({
+                        "type": "button",
+                        "data-toggle": "modal",
+                        "data-target": "#myModal",
+                        "data-date": interviewDate,
+                        "data-id": candidatesInfoArray[i].candidateId,
+                        "href": '#modal'
+                    }).append($("<i>")
+                        .attr({
+                            "class": "fa fa-eye",
+                            "aria-hidden": "true",
+                            "data-date": interviewDate,
+                            "data-id": candidatesInfoArray[i].candidateId,
+
+
+                        })))
+            //    .html("<i data-toggle='modal' data-target='#myModal' class='fa fa-eye' aria-hidden='true'></i>")
+            )
         );
-       
-
-
-
-
     }
 
 }

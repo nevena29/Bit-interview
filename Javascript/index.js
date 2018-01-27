@@ -6,8 +6,9 @@ fetch("http://localhost:3333/api/candidates")
         return response.json();
     })
     .then(function (response) {
-       candidates = response;
+        candidates = response;
         candidatesData(candidates)
+        console.log(then(), "ovo je then");
     }).catch(function (error) {
         console.log("Request failed")
     });
@@ -18,7 +19,7 @@ document.addEventListener("click", function (event) {
     if (event.target.hasAttribute("data-id")) {
         var value = event.target.getAttribute("data-id");
         localStorage.setItem("idkey", value);
-        location.assign = "reports.html";
+        // location.assign = "reports.html"; 
     }
 });
 
@@ -31,7 +32,7 @@ function searchCandidates(event) {
     });
     var searchButton = document.querySelector("#searchButton");
     var searchButtonValue = searchButton.value;
-    console.log("dada", searchButtonValue)
+    
 
     candidatesData(responseArr);
 
@@ -47,7 +48,7 @@ searchButton.addEventListener("keypress", function (event) {
 
 function candidatesData(response) {
     var main = document.querySelector(".candidateInfo")
-    main.innerHTML="";
+    main.innerHTML = "";
     // brisemo ga zato sto moramo da ga ocistimo pre nego sto ga opet napunimo da nam ne bi opet pravio kandidate jer ova funkcija to radi
     // jer ako je pozovemo gore dok ne obrisemo ovo, ona ce opet da nam pravi kandidate;
     for (i = 0; i < response.length; i++) {
