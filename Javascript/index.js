@@ -7,8 +7,7 @@ fetch("http://localhost:3333/api/candidates")
     })
     .then(function (response) {
         candidates = response;
-        candidatesData(candidates)
-        console.log(then(), "ovo je then");
+        candidatesData(candidates)   
     }).catch(function (error) {
         console.log("Request failed")
     });
@@ -38,10 +37,10 @@ function searchCandidates(event) {
 
 }
 
-searchButton.addEventListener("keypress", function (event) {
-    if (event.keyCode === 13) {
+searchButton.addEventListener("keyup", function (event) {
+    // if (event.keyCode === 13) {
         searchCandidates(event);
-    }
+    // }
 });
 
 
@@ -60,7 +59,7 @@ function candidatesData(response) {
         var elementId = response[i].id;
 
         var candidateCard = document.createElement("div");
-        candidateCard.setAttribute("class", "card col-12 col-md-4");
+        candidateCard.setAttribute("class", "card col-12 col-md-4 styling-card");
         candidateCard.setAttribute("style", "width: 18rem");
 
 

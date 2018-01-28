@@ -1,3 +1,33 @@
 .navbar-brand{
     color:black !important;
 }
+.card-img-top{
+    width: 80%;
+     display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    
+   
+}
+.styling-card{
+    width: 60%;
+    border: none;
+    padding: 20px;
+    
+    
+}
+.card-body{
+    border: 1px solid black;
+    width:80%;
+}
+.candidateInfo{
+    margin-top: 20px;
+}
+.styling-card:hover{
+    cursor: pointer;
+      transform: scale(1.1);
+}

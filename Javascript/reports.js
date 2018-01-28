@@ -22,17 +22,17 @@ request.done(function (response) {
     }
     output.append(`
 
-<div class="col-4">
+<div class="col-4 styling-candidates">
         <img src="` + Candidateimage + `">
 </div>`);
     output.append(`
-    <div class="col-4 ">
+    <div class="col-4  styling-candidates">
            <h4>Name:</h4>
           ` + CandidateName +
         `<h4> Email: </h4>` + CandidateEmail +
         `</div>`);
     output.append(`
-    <div class = "col-sm-4">
+    <div class = "col-sm-4 styling-candidates">
     <h4> Date of Birth: </h4> ` + CandidateBirthday +
         `<h4> Education </h4>` + CandidateEducation +
         `</div>`);
@@ -99,7 +99,7 @@ function renderModalData(response) {
 
         $(".modal-title").text(dataForModal.candidateName);
         $("#company").text(dataForModal.companyName);
-        $("#interviewDate").text(dataForModal.interviewDate);
+        $("#interviewDate").text( new Date(dataForModal.interviewDate).toLocaleDateString());
         $("#phase").text(dataForModal.phase);
         $("#status").text(dataForModal.status);
         $("#note").text(dataForModal.note);
